@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Letters From Your Future Self</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#04050f;
+  --bg2:#080b1a;
+  --surface:#0d1025;
+  --surface2:#131629;
+  --border:rgba(139,120,255,0.15);
+  --border2:rgba(139,120,255,0.08);
+  --text:#e8e4f8;
+  --text2:#9d97c4;
+  --text3:#5c5880;
+  --accent:#8b78ff;
+  --accent2:#c084fc;
+  --accent3:#38bdf8;
+  --gold:#f0c060;
+  --glow:rgba(139,120,255,0.25);
+  --card-bg:rgba(13,16,37,0.85);
+  --nav-bg:rgba(4,5,15,0.85);
+}
+
+[data-theme="light"]{
+  --bg:#f0eeff;
+  --bg2:#e8e3ff;
+  --surface:#fff;
+  --surface2:#f5f3ff;
+  --border:rgba(100,80,220,0.18);
+  --border2:rgba(100,80,220,0.09);
+  --text:#1a1535;
+  --text2:#4a4270;
+  --text3:#9990c8;
+  --accent:#6450dc;
+  --accent2:#a855f7;
+  --accent3:#0284c7;
+  --gold:#b07800;
+  --glow:rgba(100,80,220,0.18);
+  --card-bg:rgba(255,255,255,0.92);
+  --nav-bg:rgba(240,238,255,0.9);
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Cormorant Garamond',serif;
+  overflow-x:hidden;
+  transition:background 0.5s,color 0.5s;
+}
+
+/* ── GALAXY CANVAS ── */
+#galaxy{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  opacity:1;
+  transition:opacity 0.5s;
+}
+[data-theme="light"] #galaxy{opacity:0.18}
+
+/* ── NAV ── */
+nav{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:100;
+  background:var(--nav-bg);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border2);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 40px;
+  transition:all 0.4s;
+}
+
+.nav-logo{
+  font-family:'Cinzel',serif;
+  font-size:16px;
+  letter-spacing:0.15em;
+  color:var(--accent);
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.nav-logo span{
+  width:8px;height:8px;
+  border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 10px var(--accent);
+  display:inline-block;
+  animation:pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:0.6}}
+
+.nav-links{
+  display:flex;gap:32px;align-items:center;
+}
+
+.nav-links a{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--text2);
+  text-decoration:none;
+  transition:color 0.3s;
+}
+.nav-links a:hover{color:var(--accent)}
+
+.theme-btn{
+  background:var(--surface);
+  border:1px solid var(--border);
+  color:var(--text2);
+  padding:7px 16px;
+  border-radius:999px;
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.1em;
+  cursor:pointer;
+  transition:all 0.3s;
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+.theme-btn:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 0 20px var(--glow)}
+.theme-icon{font-size:14px;transition:transform 0.5s}
+.theme-btn:hover .theme-icon{transform:rotate(20deg)}
+
+/* ── HERO ── */
+.hero{
+  position:relative;
+  z-index:1;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:120px 24px 80px;
+}
+
+.hero-eyebrow{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.35em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:24px;
+  opacity:0;
+  animation:fadeUp 0.8s ease 0.3s both;
+}
+
+.hero-title{
+  font-family:'Cinzel',serif;
+  font-size:clamp(36px,7vw,86px);
+  font-weight:400;
+  line-height:1.05;
+  color:var(--text);
+  margin-bottom:10px;
+  opacity:0;
+  animation:fadeUp 0.9s ease 0.5s both;
+}
+
+.hero-title em{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-weight:300;
+  color:var(--accent2);
+  display:block;
+  font-size:1.1em;
+}
+
+.hero-sub{
+  font-size:clamp(16px,2.5vw,22px);
+  font-weight:300;
+  font-style:italic;
+  color:var(--text2);
+  max-width:560px;
+  line-height:1.7;
+  margin-bottom:48px;
+  opacity:0;
+  animation:fadeUp 0.9s ease 0.7s both;
+}
+
+.hero-cta{
+  display:flex;gap:14px;flex-wrap:wrap;justify-content:center;
+  opacity:0;
+  animation:fadeUp 0.9s ease 0.9s both;
+}
+
+.btn-primary{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;
+  border:none;
+  padding:14px 36px;
+  border-radius:999px;
+  font-family:'DM Mono',monospace;
+  font-size:12px;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:all 0.3s;
+  box-shadow:0 0 30px var(--glow);
+  text-decoration:none;
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 8px 40px var(--glow)}
+
+.btn-secondary{
+  background:transparent;
+  color:var(--text2);
+  border:1px solid var(--border);
+  padding:14px 36px;
+  border-radius:999px;
+  font-family:'DM Mono',monospace;
+  font-size:12px;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:all 0.3s;
+  text-decoration:none;
+}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-3px)}
+
+.hero-scroll{
+  position:absolute;
+  bottom:36px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  opacity:0;
+  animation:fadeUp 1s ease 1.4s both;
+}
+
+.scroll-line{
+  width:1px;height:50px;
+  background:linear-gradient(to bottom,var(--accent),transparent);
+  animation:scroll-anim 2s ease-in-out infinite;
+}
+@keyframes scroll-anim{0%,100%{transform:scaleY(1);opacity:0.5}50%{transform:scaleY(1.3);opacity:1}}
+
+.scroll-label{
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  letter-spacing:0.25em;
+  color:var(--text3);
+  text-transform:uppercase;
+}
+
+/* ── SECTION WRAPPER ── */
+.section{
+  position:relative;
+  z-index:1;
+  max-width:1100px;
+  margin:0 auto;
+  padding:100px 24px;
+}
+
+.section-label{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  letter-spacing:0.35em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:14px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+
+.section-title{
+  font-family:'Cinzel',serif;
+  font-size:clamp(26px,4vw,44px);
+  font-weight:400;
+  color:var(--text);
+  margin-bottom:16px;
+  line-height:1.2;
+}
+
+.section-desc{
+  font-size:18px;
+  font-style:italic;
+  color:var(--text2);
+  max-width:560px;
+  line-height:1.75;
+  margin-bottom:56px;
+}
+
+/* ── FLASHCARD ── */
+.flashcard-wrapper{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:28px;
+}
+
+.card-counter{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:var(--text3);
+  letter-spacing:0.2em;
+}
+
+.flashcard-scene{
+  width:100%;
+  max-width:520px;
+  height:300px;
+  perspective:1200px;
+  cursor:pointer;
+}
+
+.flashcard-inner{
+  width:100%;height:100%;
+  position:relative;
+  transform-style:preserve-3d;
+  transition:transform 0.7s cubic-bezier(0.4,0,0.2,1);
+}
+
+.flashcard-scene.flipped .flashcard-inner{transform:rotateY(180deg)}
+
+.card-face{
+  position:absolute;
+  inset:0;
+  border-radius:20px;
+  backface-visibility:hidden;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:36px;
+  text-align:center;
+  border:1px solid var(--border);
+  background:var(--card-bg);
+  backdrop-filter:blur(20px);
+}
+
+.card-front{
+  background:linear-gradient(145deg,var(--surface),var(--surface2));
+  box-shadow:0 0 60px var(--glow);
+}
+
+.card-back{
+  transform:rotateY(180deg);
+  background:linear-gradient(145deg,rgba(139,120,255,0.1),rgba(192,132,252,0.08));
+}
+
+.card-tag{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:16px;
+  padding:4px 12px;
+  border:1px solid var(--border);
+  border-radius:999px;
+}
+
+.card-text{
+  font-size:20px;
+  font-style:italic;
+  font-weight:300;
+  color:var(--text);
+  line-height:1.6;
+}
+
+.card-back .card-text{
+  font-size:16px;
+  color:var(--text2);
+}
+
+.card-hint{
+  position:absolute;
+  bottom:16px;
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:var(--text3);
+  letter-spacing:0.12em;
+}
+
+.card-nav{
+  display:flex;gap:12px;align-items:center;
+}
+
+.card-btn{
+  background:var(--surface);
+  border:1px solid var(--border);
+  color:var(--text2);
+  width:42px;height:42px;
+  border-radius:50%;
+  font-size:16px;
+  cursor:pointer;
+  transition:all 0.25s;
+  display:flex;align-items:center;justify-content:center;
+}
+.card-btn:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 0 20px var(--glow)}
+
+.card-flip-btn{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border:none;
+  color:#fff;
+  padding:10px 28px;
+  border-radius:999px;
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.12em;
+  cursor:pointer;
+  transition:all 0.3s;
+}
+.card-flip-btn:hover{transform:translateY(-2px);box-shadow:0 6px 25px var(--glow)}
+
+/* ── MESSAGES ── */
+.messages-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:18px;
+}
+
+.message-card{
+  background:var(--card-bg);
+  border:1px solid var(--border2);
+  border-radius:18px;
+  padding:24px;
+  backdrop-filter:blur(16px);
+  transition:all 0.3s;
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+}
+
+.message-card::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:2px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+  opacity:0;
+  transition:opacity 0.3s;
+}
+
+.message-card:hover{
+  border-color:var(--border);
+  transform:translateY(-4px);
+  box-shadow:0 12px 40px var(--glow);
+}
+.message-card:hover::before{opacity:1}
+
+.msg-year{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:var(--accent);
+  letter-spacing:0.2em;
+  margin-bottom:8px;
+}
+
+.msg-title{
+  font-family:'Cinzel',serif;
+  font-size:16px;
+  font-weight:400;
+  color:var(--text);
+  margin-bottom:10px;
+  line-height:1.3;
+}
+
+.msg-preview{
+  font-size:14px;
+  font-style:italic;
+  color:var(--text2);
+  line-height:1.65;
+  margin-bottom:14px;
+}
+
+.msg-tag{
+  display:inline-block;
+  padding:3px 10px;
+  border-radius:999px;
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+}
+
+.tag-wisdom{background:rgba(139,120,255,0.12);color:var(--accent)}
+.tag-warning{background:rgba(248,113,113,0.1);color:#f87171}
+.tag-hope{background:rgba(52,211,153,0.1);color:#34d399}
+.tag-love{background:rgba(251,191,36,0.1);color:var(--gold)}
+
+/* ── WRITE MESSAGE ── */
+.write-section{
+  background:var(--card-bg);
+  border:1px solid var(--border);
+  border-radius:24px;
+  padding:48px;
+  backdrop-filter:blur(20px);
+  position:relative;
+  overflow:hidden;
+}
+
+.write-section::after{
+  content:'';
+  position:absolute;
+  top:-80px;right:-80px;
+  width:300px;height:300px;
+  background:radial-gradient(circle,var(--accent2),transparent 70%);
+  opacity:0.07;
+  pointer-events:none;
+}
+
+.write-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+  margin-bottom:18px;
+}
+
+.input-group{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.input-group label{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--text3);
+}
+
+.input-group input,
+.input-group select,
+.input-group textarea{
+  background:var(--surface);
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:12px 16px;
+  border-radius:10px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:15px;
+  transition:border-color 0.3s,box-shadow 0.3s;
+  resize:none;
+  outline:none;
+}
+
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 20px var(--glow);
+}
+
+.input-group input::placeholder,
+.input-group textarea::placeholder{
+  color:var(--text3);
+  font-style:italic;
+}
+
+.input-group select option{background:var(--surface)}
+
+.input-full{grid-column:1/-1}
+
+.char-count{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:var(--text3);
+  text-align:right;
+  margin-top:4px;
+}
+
+.write-footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:8px;
+}
+
+.write-note{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:var(--text3);
+  letter-spacing:0.08em;
+}
+
+/* ── FEATURES GRID ── */
+.features-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:16px;
+}
+
+.feature-card{
+  background:var(--card-bg);
+  border:1px solid var(--border2);
+  border-radius:16px;
+  padding:24px 20px;
+  backdrop-filter:blur(12px);
+  transition:all 0.3s;
+  text-align:center;
+}
+
+.feature-card:hover{
+  border-color:var(--border);
+  transform:translateY(-4px);
+  box-shadow:0 8px 30px var(--glow);
+}
+
+.feature-icon{
+  font-size:30px;
+  margin-bottom:12px;
+  display:block;
+}
+
+.feature-title{
+  font-family:'Cinzel',serif;
+  font-size:13px;
+  color:var(--text);
+  margin-bottom:7px;
+  letter-spacing:0.05em;
+}
+
+.feature-desc{
+  font-size:13px;
+  font-style:italic;
+  color:var(--text2);
+  line-height:1.6;
+}
+
+/* ── QUOTE BAND ── */
+.quote-band{
+  position:relative;
+  z-index:1;
+  background:linear-gradient(135deg,rgba(139,120,255,0.08),rgba(192,132,252,0.05));
+  border-top:1px solid var(--border2);
+  border-bottom:1px solid var(--border2);
+  padding:80px 24px;
+  text-align:center;
+  overflow:hidden;
+}
+
+.quote-band::before{
+  content:'"';
+  position:absolute;
+  font-family:'Cormorant Garamond',serif;
+  font-size:300px;
+  color:var(--accent);
+  opacity:0.04;
+  top:-60px;
+  left:50%;
+  transform:translateX(-50%);
+  line-height:1;
+  pointer-events:none;
+}
+
+.big-quote{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(22px,4vw,40px);
+  font-style:italic;
+  font-weight:300;
+  color:var(--text);
+  max-width:750px;
+  margin:0 auto 20px;
+  line-height:1.5;
+}
+
+.quote-source{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:var(--text3);
+  letter-spacing:0.2em;
+}
+
+/* ── FOOTER ── */
+footer{
+  position:relative;
+  z-index:1;
+  border-top:1px solid var(--border2);
+  padding:40px 40px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:var(--bg2);
+}
+
+.footer-logo{
+  font-family:'Cinzel',serif;
+  font-size:14px;
+  color:var(--accent);
+  letter-spacing:0.15em;
+}
+
+.footer-note{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:var(--text3);
+  letter-spacing:0.1em;
+}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;
+  bottom:32px;
+  right:32px;
+  background:var(--surface);
+  border:1px solid var(--accent);
+  color:var(--text);
+  padding:14px 22px;
+  border-radius:12px;
+  font-family:'DM Mono',monospace;
+  font-size:12px;
+  letter-spacing:0.08em;
+  box-shadow:0 8px 30px var(--glow);
+  z-index:999;
+  transform:translateY(80px);
+  opacity:0;
+  transition:all 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* ── ANIMS ── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(24px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.reveal{
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity 0.7s ease,transform 0.7s ease;
+}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ── DIVIDER ── */
+.divider{
+  position:relative;
+  z-index:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 24px;
+  gap:16px;
+}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border2)}
+.divider span{font-family:'Cinzel',serif;font-size:18px;color:var(--text3)}
+
+@media(max-width:680px){
+  nav{padding:12px 18px}
+  .nav-links{display:none}
+  .write-grid{grid-template-columns:1fr}
+  .write-section{padding:28px 20px}
+  footer{flex-direction:column;gap:12px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<canvas id="galaxy"></canvas>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><span></span> Future Letters</div>
+  <div class="nav-links">
+    <a href="#flashcards">Cards</a>
+    <a href="#messages">Messages</a>
+    <a href="#write">Write</a>
+    <a href="#features">Features</a>
+  </div>
+  <button class="theme-btn" onclick="toggleTheme()">
+    <span class="theme-icon" id="themeIcon">🌙</span>
+    <span id="themeLabel">Dark</span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">A Letter Across Time</div>
+  <h1 class="hero-title">
+    Messages From<br>
+    <em>Your Future Self</em>
+  </h1>
+  <p class="hero-sub">Words your wiser self wishes you could hear right now — wisdom, warnings, and wonder, delivered from the years ahead.</p>
+  <div class="hero-cta">
+    <a href="#flashcards" class="btn-primary">Open Your First Letter</a>
+    <a href="#write" class="btn-secondary">Write to the Future</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span class="scroll-label">Scroll to Begin</span>
+  </div>
+</section>
+
+<!-- FLASHCARDS -->
+<section class="section" id="flashcards">
+  <div class="reveal">
+    <div class="section-label">01 — Wisdom Cards</div>
+    <h2 class="section-title">Daily Letters</h2>
+    <p class="section-desc">One card. One truth. Flip it to reveal what your future self wants you to know today.</p>
+  </div>
+
+  <div class="flashcard-wrapper reveal">
+    <div class="card-counter" id="cardCounter">Card 1 of 6</div>
+
+    <div class="flashcard-scene" id="flashcard" onclick="flipCard()">
+      <div class="flashcard-inner">
+        <div class="card-face card-front">
+          <span class="card-tag">From 2034 · You</span>
+          <p class="card-text" id="cardFront">"The anxiety you feel right now about the future? I lived through it. And it was nothing like you imagined."</p>
+          <span class="card-hint">↙ tap to reveal ↗</span>
+        </div>
+        <div class="card-face card-back">
+          <span class="card-tag">The Truth</span>
+          <p class="card-text" id="cardBack">It turned out better in the ways that mattered, and worse in ways that didn't. Stop rehearsing disasters that never arrive.</p>
+          <span class="card-hint">↙ tap to return ↗</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-nav">
+      <button class="card-btn" onclick="prevCard()">←</button>
+      <button class="card-flip-btn" onclick="flipCard()">Flip Card</button>
+      <button class="card-btn" onclick="nextCard()">→</button>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><span>✦</span></div>
+
+<!-- MESSAGES -->
+<section class="section" id="messages">
+  <div class="reveal">
+    <div class="section-label">02 — The Archive</div>
+    <h2 class="section-title">Letters From Ahead</h2>
+    <p class="section-desc">Sealed messages from different chapters of your life — opened only when you're ready.</p>
+  </div>
+
+  <div class="messages-grid reveal">
+    <div class="message-card" onclick="openMessage(this)">
+      <div class="msg-year">2029 · Age 27</div>
+      <div class="msg-title">About the job you almost didn't take</div>
+      <div class="msg-preview">"You were terrified. You almost said no. I need you to know what happened when you said yes instead..."</div>
+      <span class="msg-tag tag-wisdom">Wisdom</span>
+    </div>
+    <div class="message-card" onclick="openMessage(this)">
+      <div class="msg-year">2031 · Age 29</div>
+      <div class="msg-title">Please call your mother more</div>
+      <div class="msg-preview">"This isn't dramatic. This is just true. You have more time than you think, and less than you'll wish you had..."</div>
+      <span class="msg-tag tag-love">Love</span>
+    </div>
+    <div class="message-card" onclick="openMessage(this)">
+      <div class="msg-year">2035 · Age 33</div>
+      <div class="msg-title">The morning you finally stopped rushing</div>
+      <div class="msg-preview">"You made coffee slowly. You watched it rain. Nothing was urgent. Everything was fine. It will be fine..."</div>
+      <span class="msg-tag tag-hope">Hope</span>
+    </div>
+    <div class="message-card" onclick="openMessage(this)">
+      <div class="msg-year">2027 · Age 25</div>
+      <div class="msg-title">Stop apologising for being too much</div>
+      <div class="msg-preview">"The people who mattered never needed the smaller version of you. Give them the real one..."</div>
+      <span class="msg-tag tag-wisdom">Wisdom</span>
+    </div>
+    <div class="message-card" onclick="openMessage(this)">
+      <div class="msg-year">2040 · Age 38</div>
+      <div class="msg-title">A warning about comfort zones</div>
+      <div class="msg-preview">"The years you played it safe are the ones I remember least. Comfort is a beautiful cage. Notice the bars..."</div>
+      <span class="msg-tag tag-warning">Warning</span>
+    </div>
+    <div class="message-card" onclick="openMessage(this)">
+      <div class="msg-year">2033 · Age 31</div>
+      <div class="msg-title">You were enough the whole time</div>
+      <div class="msg-preview">"The person you were trying so hard to become? You already were them. You just didn't believe it yet..."</div>
+      <span class="msg-tag tag-hope">Hope</span>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE BAND -->
+<div class="quote-band">
+  <p class="big-quote">"The version of you reading this in the future didn't get there by accident. They got there by choosing, badly sometimes, bravely always."</p>
+  <span class="quote-source">— Future You, 2041</span>
+</div>
+
+<!-- WRITE -->
+<section class="section" id="write">
+  <div class="reveal">
+    <div class="section-label">03 — Compose</div>
+    <h2 class="section-title">Write to Your Future Self</h2>
+    <p class="section-desc">Seal a letter today. Choose when it opens. Let time carry your words forward.</p>
+  </div>
+
+  <div class="write-section reveal">
+    <div class="write-grid">
+      <div class="input-group">
+        <label>Your Name</label>
+        <input type="text" placeholder="Who is writing…">
+      </div>
+      <div class="input-group">
+        <label>Deliver In</label>
+        <select>
+          <option>1 Year</option>
+          <option>3 Years</option>
+          <option>5 Years</option>
+          <option>10 Years</option>
+          <option>20 Years</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label>Letter Theme</label>
+        <select>
+          <option>Wisdom & Reflection</option>
+          <option>Hopes & Dreams</option>
+          <option>Warnings & Lessons</option>
+          <option>Love & Gratitude</option>
+          <option>Goals & Ambitions</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label>Current Feeling</label>
+        <input type="text" placeholder="One word for how you feel today…">
+      </div>
+      <div class="input-group input-full">
+        <label>Your Letter</label>
+        <textarea rows="6" placeholder="Dear future me… write whatever your future self most needs to hear from you today." id="letterArea" oninput="countChars()"></textarea>
+        <div class="char-count"><span id="charNum">0</span> / 600</div>
+      </div>
+    </div>
+    <div class="write-footer">
+      <span class="write-note">🔒 Sealed until the date you choose</span>
+      <button class="btn-primary" onclick="sealLetter()">Seal & Send Forward →</button>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><span>✦</span></div>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <div class="reveal">
+    <div class="section-label">04 — What's Inside</div>
+    <h2 class="section-title">Everything The Platform Holds</h2>
+  </div>
+
+  <div class="features-grid reveal">
+    <div class="feature-card">
+      <span class="feature-icon">🃏</span>
+      <div class="feature-title">Daily Flash Cards</div>
+      <div class="feature-desc">One truth per day, flippable wisdom cards from your future timeline.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📬</span>
+      <div class="feature-title">Time-Sealed Letters</div>
+      <div class="feature-desc">Write today, receive it in 1, 5 or 20 years exactly as you wrote it.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🌌</span>
+      <div class="feature-title">Memory Archive</div>
+      <div class="feature-desc">A private library of moments, feelings, and intentions across time.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🌙</span>
+      <div class="feature-title">Night Mode Journal</div>
+      <div class="feature-desc">Quiet, distraction-free writing space calibrated for reflection.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔔</span>
+      <div class="feature-title">Letter Delivery Alerts</div>
+      <div class="feature-desc">Get notified the moment a sealed letter from your past self arrives.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">✨</span>
+      <div class="feature-title">Wisdom Threads</div>
+      <div class="feature-desc">Connect letters across years to see how your thinking has evolved.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Future Letters</div>
+  <div class="footer-note">Built with HTML & CSS · Your words, preserved across time</div>
+  <div class="footer-note">© 2087 · All timelines reserved</div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── GALAXY ──
+const canvas = document.getElementById('galaxy');
+const ctx = canvas.getContext('2d');
+let stars = [], nebulae = [], W, H;
+
+function resize(){
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+
+function initStars(){
+  stars = Array.from({length:220}, () => ({
+    x: Math.random()*W, y: Math.random()*H,
+    r: Math.random()*1.6+0.2,
+    o: Math.random()*0.7+0.2,
+    speed: Math.random()*0.3+0.05,
+    twinkle: Math.random()*Math.PI*2,
+    twinkleSpeed: Math.random()*0.02+0.005
+  }));
+  nebulae = Array.from({length:5}, () => ({
+    x: Math.random()*W, y: Math.random()*H,
+    r: Math.random()*220+120,
+    hue: [260,280,300,240,200][Math.floor(Math.random()*5)],
+    o: Math.random()*0.06+0.02,
+    dx: (Math.random()-0.5)*0.15,
+    dy: (Math.random()-0.5)*0.15
+  }));
+}
+
+function drawGalaxy(){
+  ctx.clearRect(0,0,W,H);
+
+  // nebulae
+  nebulae.forEach(n => {
+    n.x += n.dx; n.y += n.dy;
+    if(n.x < -n.r) n.x = W+n.r;
+    if(n.x > W+n.r) n.x = -n.r;
+    if(n.y < -n.r) n.y = H+n.r;
+    if(n.y > H+n.r) n.y = -n.r;
+    const g = ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.r);
+    g.addColorStop(0,`hsla(${n.hue},80%,65%,${n.o})`);
+    g.addColorStop(1,'transparent');
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+    ctx.fill();
+  });
+
+  // stars
+  stars.forEach(s => {
+    s.twinkle += s.twinkleSpeed;
+    const op = s.o * (0.6 + 0.4 * Math.sin(s.twinkle));
+    s.y -= s.speed;
+    if(s.y < -2) { s.y = H+2; s.x = Math.random()*W; }
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fillStyle = `rgba(200,190,255,${op})`;
+    ctx.fill();
+
+    // occasional glow
+    if(s.r > 1.2){
+      const glow = ctx.createRadialGradient(s.x,s.y,0,s.x,s.y,s.r*5);
+      glow.addColorStop(0,`rgba(180,160,255,${op*0.25})`);
+      glow.addColorStop(1,'transparent');
+      ctx.fillStyle = glow;
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.r*5,0,Math.PI*2);
+      ctx.fill();
+    }
+  });
+
+  requestAnimationFrame(drawGalaxy);
+}
+
+resize();
+initStars();
+drawGalaxy();
+window.addEventListener('resize', () => { resize(); initStars(); });
+
+// ── THEME ──
+function toggleTheme(){
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.getElementById('themeIcon').textContent = isDark ? '☀️' : '🌙';
+  document.getElementById('themeLabel').textContent = isDark ? 'Light' : 'Dark';
+}
+
+// ── FLASHCARDS ──
+const cards = [
+  {
+    front: '"The anxiety you feel right now about the future? I lived through it. And it was nothing like you imagined."',
+    back: 'It turned out better in the ways that mattered, and worse in the ways that didn\'t. Stop rehearsing disasters that never arrive.',
+    year: 'From 2034 · You', tag: 'Clarity'
+  },
+  {
+    front: '"You will lose things you were certain you couldn\'t survive losing. And then, somehow, you\'ll keep going."',
+    back: 'Resilience isn\'t something you build before you need it. You discover it by surviving things you never thought you could.',
+    year: 'From 2031 · You', tag: 'Strength'
+  },
+  {
+    front: '"The version of yourself you\'ve been embarrassed by? They were doing their best with what they had."',
+    back: 'Self-compassion isn\'t weakness — it\'s the only thing that lets you actually grow without destroying yourself in the process.',
+    year: 'From 2036 · You', tag: 'Kindness'
+  },
+  {
+    front: '"You spent three years trying to impress someone who never truly saw you. I won\'t tell you who."',
+    back: 'But I\'ll tell you this: the people worth impressing are the ones already proud of you for who you are, not who you\'re performing.',
+    year: 'From 2029 · You', tag: 'Truth'
+  },
+  {
+    front: '"Your body carried you through everything. You could have been kinder to it."',
+    back: 'Rest when you\'re tired. It\'s not laziness — it\'s maintenance. The machine that houses everything you love deserves attention.',
+    year: 'From 2038 · You', tag: 'Care'
+  },
+  {
+    front: '"The small, unremarkable Tuesday that you\'re living right now? You will remember it with love."',
+    back: 'Ordinary days are only invisible while you\'re inside them. Look around. This is the good part.',
+    year: 'From 2045 · You', tag: 'Presence'
+  }
+];
+
+let currentCard = 0;
+let isFlipped = false;
+
+function updateCard(){
+  const scene = document.getElementById('flashcard');
+  const c = cards[currentCard];
+  document.getElementById('cardFront').textContent = c.front;
+  document.getElementById('cardBack').textContent = c.back;
+  scene.querySelector('.card-front .card-tag').textContent = c.year;
+  scene.querySelector('.card-back .card-tag').textContent = c.tag;
+  document.getElementById('cardCounter').textContent = `Card ${currentCard+1} of ${cards.length}`;
+  if(isFlipped){ scene.classList.remove('flipped'); isFlipped = false; }
+}
+
+function flipCard(){
+  const scene = document.getElementById('flashcard');
+  isFlipped = !isFlipped;
+  scene.classList.toggle('flipped', isFlipped);
+}
+
+function nextCard(){
+  currentCard = (currentCard+1) % cards.length;
+  updateCard();
+}
+
+function prevCard(){
+  currentCard = (currentCard - 1 + cards.length) % cards.length;
+  updateCard();
+}
+
+// ── MESSAGES ──
+function openMessage(card){
+  const title = card.querySelector('.msg-title').textContent;
+  showToast(`📬 "${title}" — opening letter…`);
+}
+
+// ── LETTER ──
+function countChars(){
+  const n = document.getElementById('letterArea').value.length;
+  document.getElementById('charNum').textContent = n;
+}
+
+function sealLetter(){
+  const area = document.getElementById('letterArea');
+  if(area.value.trim().length < 10){
+    showToast('✍️ Write at least a few words first…');
+    return;
+  }
+  area.value = '';
+  document.getElementById('charNum').textContent = '0';
+  showToast('🔒 Letter sealed. It will find you when the time is right.');
+}
+
+// ── TOAST ──
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// ── REVEAL ON SCROLL ──
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if(e.isIntersecting){
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      observer.unobserve(e.target);
+    }
+  });
+}, {threshold: 0.12});
+reveals.forEach(r => observer.observe(r));
+</script>
+</body>
+</html>
